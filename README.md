@@ -10,7 +10,7 @@ The RAW files are read using Wael Farahs [guppi package](https://github.com/wfar
 6. Header Size
 
 an example for a header is provided below.
-
+```yaml
 {
     'BACKEND': 'GUPPI',
     'INSTANCE': 1,
