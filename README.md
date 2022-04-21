@@ -1,3 +1,3 @@
 # ATA-RAW-to-IQ
 
-HI!
+This is a Python script which converts the ATA's beamformer output to an IQ timeseries.
