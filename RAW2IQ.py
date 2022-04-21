@@ -27,9 +27,15 @@ def main():
 
     parser.add_argument('-X', '--X-Pol', help='Choose X polarisation to process. This is the default option.', action='store_true', default=True)
     parser.add_argument('-Y', '--Y-Pol', help='Choose Y polarisation to process.', action='store_true', default=False)
+
+    requiredNamed = parser.add_argument_group('required named arguments')
+    requiredNamed.add_argument('-i', '--Input_File_Path', type=str, help='Enter Path to input raw file', required=True)
+    requiredNamed.add_argument('-o', '--Output_File_Path', type=str, help='Enter Path to interleaved IQ data and the name you wish the file to have (without file'+\
+                        ' format extention)', required=True)
     
     args = parser.parse_args()
-    
+
+
     if args.decim < 1:
         raise Exception('Decimation Factor "'+str(args.decim)+'", is invalid')
 
@@ -59,8 +65,10 @@ def main():
         raise Exception('Amount of Blocks: "'+str(num_blocks)+'", is invalid')
            
     roll_factor = -int(f_c/hdr['CHAN_BW'])
-    file_path = '/mnt/buf0/sobernberger/MAVEN/'
-    write_file = open(file_path+'ts_MAVEN.sigmf-data', 'bw')
+    #file_path = '/mnt/buf0/sobernberger/MAVEN/'
+    print(args.Input_File_Path)
+    print(args.Output_File_Path)
+    write_file = open(args.Input_File_Path+'.sigmf-data', 'bw')
     for block_idx in range(num_blocks):
         ts_IQ = np.zeros(hdr['PIPERBLK']*hdr['NCHAN'], dtype='complex')
         print('Current Block: '+str(block_idx+1))
@@ -91,7 +99,7 @@ def main():
     center_frequency = hdr['OBSFREQ'] + hdr['CHAN_BW']/2 - (hdr['OBSBW']/2-args.f_c)
 
     meta = SigMFFile(
-    data_file=file_path+'ts_MAVEN.sigmf-data',
+    data_file=args.Output_File_Path+'.sigmf-data',
     global_info = {
         SigMFFile.DATATYPE_KEY: get_data_type_str(ts_IQ_interleaved),
         SigMFFile.SAMPLE_RATE_KEY: (round(bandwidth, 2)),
@@ -107,7 +115,7 @@ def main():
     
     )
     assert meta.validate()
-    meta.tofile(file_path+'ts_MAVEN.sigmf-meta')
+    meta.tofile(args.Output_File_Path+'.sigmf-meta')
 
 
 
