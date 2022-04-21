@@ -30,12 +30,12 @@ The script uses command line inputs to hand user specific options to the script:
 
 This shall serve as an example on how to convert some data collected with the ATAs beamformer to IQ time samples.
 The original RF spectrum is presented in the plot below.
-![Passband Spectrum](RF.png)
+![Passband Spectrum](RF_Spectrum.png)
 
 This is data from a LTE cell tower which transmitts at a center frequency of 1960 MHz. As we can see, the spectrum is centered around the middle of the bandwidth. The center of the signal should end up at DC to process it further.
 It is the default option to center the center of the original spectrum at DC and we do not want to decimate the signal. As these are the default options we do not have to pass any arguments to the script besides the paths for in- and output files.
 The resulting spectrum is shown in the following plot.
 
-![Baseband Spectrum](IQ-decim_conv.png)
+![Baseband Spectrum](IQ_Spectrum.png)
 
 As we can see the RF to IQ conversion consists of swapping the left half of the spectrum with the right half. This is due to the fact, that numpys IFFT function expects the first half of the spectrum to consist of the positive frequencies and the right half of the negative frequencies. In this case this is achieved by swapping the halves of the spectrum.
