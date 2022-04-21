@@ -13,10 +13,6 @@ import sigmf
 
 
 def main():
-    fname = '/mnt/buf0/sobernberger/MAVEN/guppi_59688_63255_3379455_mars_0001-beam0000.0000.raw'#/mnt/buf0/sobernberger/1960MHz/guppi_59677_73119_16564636_AzEl_0001-beam0000.0000.raw'
-    f = guppi.Guppi(fname)
-    hdr = f._parse_header()
-    #rich.print(hdr)
     parser = argparse.ArgumentParser(description="Convert the ATA's beamformer output raw file to IQ")
     parser.add_argument('-fc', '--f_c', type=float, help='Frequency which will be shifted to DC in MHz. Default is '\
                         +str(hdr['OBSBW']/2)+ 'MHz, as this is the center of the recorded band. Has to be a multiple of '+str(hdr['CHAN_BW'])+'.',\
@@ -35,6 +31,11 @@ def main():
     
     args = parser.parse_args()
 
+
+    fname = args.Input_File_Path#/mnt/buf0/sobernberger/1960MHz/guppi_59677_73119_16564636_AzEl_0001-beam0000.0000.raw'
+    f = guppi.Guppi(fname)
+    hdr = f._parse_header()
+    #rich.print(hdr)
 
     if args.decim < 1:
         raise Exception('Decimation Factor "'+str(args.decim)+'", is invalid')
@@ -68,7 +69,7 @@ def main():
     #file_path = '/mnt/buf0/sobernberger/MAVEN/'
     print(args.Input_File_Path)
     print(args.Output_File_Path)
-    write_file = open(args.Input_File_Path+'.sigmf-data', 'bw')
+    write_file = open(args.Output_File_Path+'.sigmf-data', 'bw')
     for block_idx in range(num_blocks):
         ts_IQ = np.zeros(hdr['PIPERBLK']*hdr['NCHAN'], dtype='complex')
         print('Current Block: '+str(block_idx+1))
