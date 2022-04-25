@@ -4,7 +4,7 @@ This is a Python script which converts the ATA's beamformer output to an IQ time
 The RAW files are read using Wael Farahs [guppi package](https://github.com/wfarah/guppi), which also provides information from header files, such as: 
 1. Channel Bandwidth 
 2. Total Bandwidth
-3. Center Frequency (Header['OBSFREQ'] denotes the frequency at which the middle channel starts. Therefore the center frequency can be calculated by adding half of the channels bandwidth)
+3. Center Frequency (Header['OBSFREQ'] denotes the frequency at which the center channel starts. Therefore the center frequency can be calculated by adding half of the channels bandwidth)
 4. Number of Samples per Spectrum
 5. Time per Spectrum
 6. Header Size
