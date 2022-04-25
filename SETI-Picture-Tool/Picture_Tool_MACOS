@@ -100,7 +100,7 @@ class ImageViewer(object):
         
         self.canvas.itemconfigure(self.image_on_canvas, image=img)
         self.canvas.config(width=self.width, height=self.height)
-        #try:
+            #try:
         self.canvas.wait_visibility()
         self.root.update
         #except tk.TclError:
